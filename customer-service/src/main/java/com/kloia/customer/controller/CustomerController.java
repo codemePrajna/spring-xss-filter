@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -36,7 +38,12 @@ public class CustomerController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> createCustomer(@RequestBody @Validated CustomerRequestDto customerRequestDto) throws Exception {
+    public ResponseEntity<Customer> createCustomer(
+            HttpServletRequest httpServletRequest,
+            @RequestBody @Validated CustomerRequestDto customerRequestDto,
+            @RequestHeader(name = "X-Request-Id", required = false) String requestId
+    ) throws Exception {
+        String requestIdFromHttpServletRequest = httpServletRequest.getHeader("X-Request-Id");
         Customer account = customerService.save(customerRequestDto);
         return ResponseEntity.ok(account);
     }

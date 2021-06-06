@@ -1,0 +1,23 @@
+POST http://localhost:8080/customers
+Content-Type: application/json
+X-Request-Id: 12345
+
+{
+  "name": "<script>dropDatabase()</script>",
+  "age": 12,
+  "accountId": 1
+}
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+X-Request-Id: '<script>dropDatabase()</script>'
+
+{
+  "name": "kloia",
+  "age": 12,
+  "accountId": 1
+}
+
+###

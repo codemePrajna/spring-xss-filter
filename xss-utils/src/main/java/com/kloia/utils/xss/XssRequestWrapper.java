@@ -1,7 +1,13 @@
 package com.kloia.utils.xss;
 
+import org.springframework.util.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 
 public class XssRequestWrapper extends HttpServletRequestWrapper {
 
@@ -48,4 +54,17 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
         String header = super.getHeader(name);
         return XssRemover.stripXSS(header);
     }
+
+    @Override
+    public Enumeration<String> getHeaders(String name) {
+        Enumeration<String> headers = super.getHeaders(name);
+        String[] values = StringUtils.toStringArray(headers);
+        List<String> strippedValues = new ArrayList<>();
+        for (String value : values) {
+            String strippedValue = XssRemover.stripXSS(value);
+            strippedValues.add(strippedValue);
+        }
+        return Collections.enumeration(strippedValues);
+    }
+
 }
