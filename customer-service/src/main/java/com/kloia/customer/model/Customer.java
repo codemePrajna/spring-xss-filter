@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "customer", schema = "public")
+//@Table(name = "customer", schema = "public")
 @SequenceGenerator(name = "customer_id_seq", schema = "public", sequenceName = "customer_id_seq", allocationSize = 1)
 public class Customer {
 
@@ -26,13 +26,13 @@ public class Customer {
     @GeneratedValue(generator = "customer_id_seq")
     private Integer id;
 
-    @Column(name = "name", nullable = false)
+   // @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "age", nullable = false)
+   // @Column(name = "age", nullable = false)
     private Integer age;
 
-    @Column(name = "account_id", nullable = false)
+   // @Column(name = "account_id", nullable = false)
     private Long accountId;
 
 }
